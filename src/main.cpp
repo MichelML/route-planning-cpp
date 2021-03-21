@@ -55,6 +55,19 @@ int main(int argc, const char **argv)
     // TODO 1: Declare floats `start_x`, `start_y`, `end_x`, and `end_y` and get
     // user input for these values using std::cin. Pass the user input to the
     // RoutePlanner object below in place of 10, 10, 90, 90.
+    float start_x;
+    float start_y;
+    float end_x;
+    float end_y;
+
+    cout << "Specify start_x:";
+    cin >> start_x;
+    cout << "Specify start_y:";
+    cin >> start_y;
+    cout << "Specify end_x:";
+    cin >> end_x;
+    cout << "Specify end_y:";
+    cin >> end_y;
 
     // Build Model.
     RouteModel model{osm_data};
