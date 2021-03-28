@@ -29,15 +29,23 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node)
 // Tips:
 // - Use the FindNeighbors() method of the current_node to populate current_node.neighbors vector with all the neighbors.
 // - For each node in current_node.neighbors, set the parent, the h_value, the g_value.
-// - Use CalculateHValue below to implement the h-Value calculation.
+// - Use CalculateHValue above to implement the h-Value calculation.
 // - For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 {
     // Add node to open vector, and mark grid cell as closed.
     current_node->FindNeighbors();
-    std::vector<RouteModel::Node *> neighbors = current_node->neighbors;
-    // wip
+    auto neighbors = current_node->neighbors;
+
+    // For each node in current_node.neighbors, set the parent, the h_value, the g_value.
+    for(auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator) {
+        (*neighbor_iterator)->h_value = CalculateHValue((*neighbor_iterator));
+        (*neighbor_iterator)->g_value = current_node->g_value + current_node->distance(*(*neighbor_iterator));
+        (*neighbor_iterator)->parent = current_node;
+    }
+
+    // For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 }
 
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
