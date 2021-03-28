@@ -60,14 +60,14 @@ int main(int argc, const char **argv)
     float end_x;
     float end_y;
 
-    cout << "Specify start_x:";
-    cin >> start_x;
-    cout << "Specify start_y:";
-    cin >> start_y;
-    cout << "Specify end_x:";
-    cin >> end_x;
-    cout << "Specify end_y:";
-    cin >> end_y;
+    std::cout << "Specify start_x:";
+    std::cin >> start_x;
+    std::cout << "Specify start_y:";
+    std::cin >> start_y;
+    std::cout << "Specify end_x:";
+    std::cin >> end_x;
+    std::cout << "Specify end_y:";
+    std::cin >> end_y;
 
     // Build Model.
     RouteModel model{osm_data};
