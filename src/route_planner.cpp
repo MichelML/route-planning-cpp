@@ -39,7 +39,8 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
     auto neighbors = current_node->neighbors;
 
     // For each node in current_node.neighbors, set the parent, the h_value, the g_value.
-    for(auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator) {
+    for (auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator)
+    {
         auto neighb = *neighbor_iterator;
         neighb->h_value = CalculateHValue((*neighbor_iterator));
         neighb->g_value = current_node->g_value + current_node->distance(*neighb);
