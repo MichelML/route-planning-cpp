@@ -40,12 +40,12 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 
     // For each node in current_node.neighbors, set the parent, the h_value, the g_value.
     for(auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator) {
-        (*neighbor_iterator)->h_value = CalculateHValue((*neighbor_iterator));
-        (*neighbor_iterator)->g_value = current_node->g_value + current_node->distance(*(*neighbor_iterator));
-        (*neighbor_iterator)->parent = current_node;
+        auto neighb = *neighbor_iterator;
+        neighb->h_value = CalculateHValue((*neighbor_iterator));
+        neighb->g_value = current_node->g_value + current_node->distance(*neighb);
+        neighb->parent = current_node;
+        RoutePlanner::open_list.emplace_back(neighb);
     }
-
-    // For each node in current_node.neighbors, add the neighbor to open_list and set the node's visited attribute to true.
 }
 
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
