@@ -45,7 +45,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
         neighb->h_value = CalculateHValue((*neighbor_iterator));
         neighb->g_value = current_node->g_value + current_node->distance(*neighb);
         neighb->parent = current_node;
-        RoutePlanner::open_list.emplace_back(neighb);
+        open_list.emplace_back(neighb);
     }
 }
 
@@ -56,8 +56,20 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 // - Remove that node from the open_list.
 // - Return the pointer.
 
+bool compareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Node *n2)
+{
+    double sum_1 = n1->g_value + n1->h_value;
+    double sum_2 = n2->g_value + n2->h_value;
+    return (sum_1 < sum_2);
+}
+
 RouteModel::Node *RoutePlanner::NextNode()
 {
+    std::sort(open_list.begin(), open_list.end(), compareSumOfGAndHValues);
+    auto node_with_lowest_sum = open_list.back();
+    open_list.pop_back();
+    
+    return node_with_lowest_sum;
 }
 
 // TODO 6: Complete the ConstructFinalPath method to return the final path found from your A* search.
