@@ -58,7 +58,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 // - Remove that node from the open_list.
 // - Return the pointer.
 
-bool compareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Node *n2)
+bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Node *n2)
 {
     double sum_1 = n1->g_value + n1->h_value;
     double sum_2 = n2->g_value + n2->h_value;
@@ -67,7 +67,7 @@ bool compareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Node *n2)
 
 RouteModel::Node *RoutePlanner::NextNode()
 {
-    std::sort(open_list.begin(), open_list.end(), compareSumOfGAndHValues);
+    std::sort(open_list.begin(), open_list.end(), CompareSumOfGAndHValues);
     auto node_with_lowest_sum = open_list.back();
     open_list.pop_back();
 
@@ -121,7 +121,7 @@ void RoutePlanner::AStarSearch()
         auto current_node = NextNode();
     }
 
-    auto final_path = ConstructFinalPath(end_node);
-    m_Model.path = final_path;
+    m_Model.path = ConstructFinalPath(end_node);
+    exit(0);
     return;
 }
