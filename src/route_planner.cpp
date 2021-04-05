@@ -39,6 +39,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
     auto neighbors = current_node->neighbors;
 
     // For each node in current_node.neighbors, set the parent, the h_value, the g_value.
+    // And, add it to open_list
     for (auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator)
     {
         auto neighb = *neighbor_iterator;
@@ -47,6 +48,7 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
         neighb->parent = current_node;
         open_list.emplace_back(neighb);
     }
+    current_node->visited = true;
 }
 
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
@@ -110,7 +112,16 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
 void RoutePlanner::AStarSearch()
 {
-    RouteModel::Node *current_node = nullptr;
+    RouteModel::Node *current_node = start_node;
+    std::vector<RouteModel::Node *> open_list;
 
-    // TODO: Implement your solution here.
+    while (current_node != end_node)
+    {
+        AddNeighbors(start_node);
+        auto current_node = NextNode();
+    }
+
+    auto final_path = ConstructFinalPath(current_node);
+    m_Model.path = final_path;
+    return;
 }
