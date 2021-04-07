@@ -73,7 +73,6 @@ bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Nod
 RouteModel::Node *RoutePlanner::NextNode()
 {
     std::sort(open_list.begin(), open_list.end(), CompareSumOfGAndHValues);
-    std::cout << std::to_string(open_list.size()) << std::endl;
     auto *node_with_lowest_sum = open_list.back();
     open_list.pop_back();
 
