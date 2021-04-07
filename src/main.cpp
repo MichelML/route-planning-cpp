@@ -60,13 +60,13 @@ int main(int argc, const char **argv)
     float end_x;
     float end_y;
 
-    std::cout << "Specify start_x:";
+    std::cout << "Specify start_x:" << std::endl;
     std::cin >> start_x;
-    std::cout << "Specify start_y:";
+    std::cout << "Specify start_y:" << std::endl;
     std::cin >> start_y;
-    std::cout << "Specify end_x:";
+    std::cout << "Specify end_x:" << std::endl;
     std::cin >> end_x;
-    std::cout << "Specify end_y:";
+    std::cout << "Specify end_y:" << std::endl;
     std::cin >> end_y;
 
     // Build Model.
