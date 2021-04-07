@@ -69,7 +69,7 @@ bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Nod
 RouteModel::Node *RoutePlanner::NextNode()
 {
     std::sort(open_list.begin(), open_list.end(), CompareSumOfGAndHValues);
-    auto node_with_lowest_sum = open_list.back();
+    auto *node_with_lowest_sum = open_list.back();
     open_list.pop_back();
 
     return node_with_lowest_sum;
@@ -119,7 +119,8 @@ void RoutePlanner::AStarSearch()
     while (current_node != end_node)
     {
         AddNeighbors(current_node);
-        auto current_node = NextNode();
+        auto *current_node = NextNode();
+        std::cout << current_node->x << std::endl;
     }
 
     m_Model.path = ConstructFinalPath(end_node);
