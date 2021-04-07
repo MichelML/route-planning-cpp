@@ -34,7 +34,7 @@ float RoutePlanner::CalculateHValue(RouteModel::Node const *node)
 
 void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 {
-    // Add node to open vector, and mark grid cell as closed.
+    // Use the FindNeighbors() method of the current_node to populate current_node.neighbors vector with all the neighbors.
     current_node->FindNeighbors();
     auto neighbors = current_node->neighbors;
 
@@ -43,13 +43,17 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
     for (auto neighbor_iterator = neighbors.begin(); neighbor_iterator != neighbors.end(); ++neighbor_iterator)
     {
         auto neighb = *neighbor_iterator;
+
         neighb->h_value = CalculateHValue((*neighbor_iterator));
         neighb->g_value = current_node->g_value + current_node->distance(*neighb);
         neighb->parent = current_node;
-        neighb->visited = true;
-        open_list.emplace_back(neighb);
+
+        if (neighb->visited != true)
+        {
+            neighb->visited = true;
+            open_list.emplace_back(neighb);
+        }
     }
-    current_node->visited = true;
 }
 
 // TODO 5: Complete the NextNode method to sort the open list and return the next node.
@@ -69,6 +73,7 @@ bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Nod
 RouteModel::Node *RoutePlanner::NextNode()
 {
     std::sort(open_list.begin(), open_list.end(), CompareSumOfGAndHValues);
+    std::cout << std::to_string(open_list.size()) << std::endl;
     auto *node_with_lowest_sum = open_list.back();
     open_list.pop_back();
 
@@ -116,11 +121,10 @@ void RoutePlanner::AStarSearch()
 {
     auto *current_node = start_node;
 
-    while (current_node != end_node)
+    while (current_node != end_node && current_node != nullptr)
     {
         AddNeighbors(current_node);
         auto *current_node = NextNode();
-        std::cout << current_node->x << std::endl;
     }
 
     m_Model.path = ConstructFinalPath(end_node);
