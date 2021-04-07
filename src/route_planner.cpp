@@ -8,7 +8,6 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     start_y *= 0.01;
     end_x *= 0.01;
     end_y *= 0.01;
-    std::cout << "done" << std::endl;
 
     // TODO 2: Use the m_Model.FindClosestNode method to find the closest nodes to the starting and ending coordinates.
     // Store the nodes you find in the RoutePlanner's start_node and end_node attributes.
@@ -92,11 +91,16 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
     // TODO: Implement your solution here.
     auto node = current_node;
-    while (node->parent != nullptr)
+    while (true)
     {
-        distance = distance + current_node->distance(*node->parent);
+        distance = distance + node->distance(*node->parent);
         path_found.emplace_back(*node);
         node = node->parent;
+        if (node->parent == nullptr) {
+            distance = distance + node->distance(*node->parent);
+            path_found.emplace_back(*node);
+            break;
+        }
     }
     std::reverse(path_found.begin(), path_found.end());
 
