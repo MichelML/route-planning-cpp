@@ -61,7 +61,7 @@ bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Nod
 {
     double sum_1 = n1->g_value + n1->h_value;
     double sum_2 = n2->g_value + n2->h_value;
-    return (sum_1 < sum_2);
+    return (sum_1 > sum_2);
 }
 
 RouteModel::Node *RoutePlanner::NextNode()
