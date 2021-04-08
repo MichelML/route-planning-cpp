@@ -57,16 +57,13 @@ void RoutePlanner::AddNeighbors(RouteModel::Node *current_node)
 // - Remove that node from the open_list.
 // - Return the pointer.
 
-bool RoutePlanner::CompareSumOfGAndHValues(RouteModel::Node *n1, RouteModel::Node *n2)
-{
-    double sum_1 = n1->g_value + n1->h_value;
-    double sum_2 = n2->g_value + n2->h_value;
-    return (sum_1 > sum_2);
-}
-
 RouteModel::Node *RoutePlanner::NextNode()
 {
-    std::sort(open_list.begin(), open_list.end(), CompareSumOfGAndHValues);
+    std::sort(open_list.begin(), open_list.end(), [](RouteModel::Node *n1, RouteModel::Node *n2) {
+        double sum_1 = n1->g_value + n1->h_value;
+        double sum_2 = n2->g_value + n2->h_value;
+        return (sum_1 > sum_2);
+    });
     auto *node_with_lowest_sum = open_list.back();
     open_list.pop_back();
 
